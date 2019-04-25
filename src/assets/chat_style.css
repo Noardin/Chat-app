@@ -1,0 +1,255 @@
+body{
+    display: grid;
+    grid-auto-rows: auto 1fr;
+    grid-template-areas: 'topnav'
+                            'chat_wrapp';
+}
+#Logout_button{
+    float: right;
+    
+
+
+}
+.message_holder_wrapper{
+    grid-area: message;
+    position: relative;
+    padding: 5px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: whitesmoke;
+
+}
+.message_holder{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+.day_wrapper{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.upper_message_wrapper{
+     margin-top: 20px;
+    padding-bottom: 10px;
+    display: grid;
+
+
+}
+.nic_tu_neni{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.user_img_wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    padding-left: 10px;
+    grid-area: userimg;
+    padding-right: 20px;
+}
+img.user_img{
+
+    border-radius: 100%;
+    background-color: white;
+    width: 4rem;
+}
+.collapse{
+    grid-area: collapse;
+}
+.upper_message_wrapper.you{
+    grid-template-columns:auto auto 1fr;
+    grid-template-areas: 'userimg you .';
+}
+.upper_message_wrapper.other{
+    grid-template-columns: 1fr auto auto;
+    grid-template-areas: '. other userimg';
+}
+.message_wrapper.you{
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    text-underline: none;
+    grid-area:you;
+    display: grid;
+    float: left;
+
+     border-radius: 10px;
+    padding: 10px;
+    height: auto;
+    grid-template-rows: auto auto auto;
+    grid-template-columns: minmax(25vw,auto);
+    grid-template-areas: 'name'
+                        'msg '
+                        'collapse';
+
+}
+.message_wrapper{
+    font-size: larger;
+}
+.message_wrapper.other{
+    background-color: royalblue;
+    grid-area: other;
+     display: grid;
+    float: right;
+     border-radius: 10px;
+    padding: 10px;
+    height: auto;
+    grid-template-rows: auto auto;
+    grid-template-columns:minmax(25vw,auto);
+    grid-template-areas: 'name'
+                        'msg';
+
+}
+.message_wrapper b{
+    grid-area: name;
+}
+.message_wrapper .msg{
+
+    grid-area: msg;
+    /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+    display: flex;
+    flex-direction: column;
+}
+.you{
+
+
+
+}
+.other {
+}
+.empty_message{
+    visibility: hidden;
+}
+html, body{
+    background-color: #3498DB;
+    height: 100%;
+    margin: 0;
+
+
+}
+
+.navbar{
+    grid-area: topnav;
+    left: 0;
+    top: 0;
+
+}
+.inner_wrapper{
+    position: relative;
+}
+#odhlas_icon{
+    font-size: 20px;
+}
+#chat_input input[type=submit]{
+    border: none;
+    height:100%;
+    outline: none;
+    width: 120px;
+    background-color: darkblue;
+    color: white;
+    font-family: "Arial Black";
+}
+#chat_input{
+    height: 10vh;
+    border:  none;
+    display: grid;
+    grid-area:input ;
+    grid-template-columns: 1fr auto;
+
+}
+.message{
+    border: none;
+    outline: none;
+    display: flex;
+    padding-left: 5px;
+    width: 100%;
+    justify-content: center;
+
+
+}
+#chat_wrapper{
+    grid-area: chat_wrapp;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto ;
+    grid-template-areas: ' message '
+                            ' input ';
+
+}
+
+.horizontal_date{
+  overflow: hidden;
+  text-align: center;
+}
+
+.horizontal_date:before,
+.horizontal_date:after {
+  background-color: #000;
+  content: "";
+  display: inline-block;
+  height: 1px;
+  position: relative;
+  vertical-align: middle;
+  width: 50%;
+}
+
+.horizontal_date:before {
+  right: 0.5em;
+  margin-left: -50%;
+}
+
+.horizontal_date:after {
+  left: 0.5em;
+  margin-right: -50%;
+}
+
+.menu{
+    padding-top: 0.2rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: 'reakce upravit vymazat';
+
+}
+.menu div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.menu div:nth-child(-n+2){
+    border-right: 0.1rem grey solid;
+}
+.reakce{
+    grid-area: reakce;
+}
+.vymazat{
+    grid-area: vymazat;
+}
+.upravit{
+    grid-area: upravit;
+}
+.more{
+    float: right;
+    color: black;
+    font-size: 1rem;
+}

@@ -1,0 +1,119 @@
+#settings_cross{
+    font-size: 1.5rem;
+}
+.setting_header{
+    height: 3rem;
+    font-size: 2rem;
+    font-family: 'Concert One', cursive;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: royalblue;
+    border-bottom: #777777 2px solid;
+    margin-bottom:5px;
+}
+#myTabs a{
+    border-radius: .25em;
+    padding: .05rem;
+    font-size: 1.25rem;
+    font-family: 'Concert One', cursive;
+    width: 100%;
+    text-align: center;
+    outline: none;
+    text-decoration: none;
+    color: royalblue;
+    background-color: transparent;
+
+}
+#myTabs a:hover{
+    color: white;
+    background-color: royalblue;
+}
+#tabs_container{
+    border-right: #777777 2px solid;
+}
+.center-pills{
+    display: flex;
+    align-items: center;
+}
+.settings_container {
+    height: 500px;
+}
+
+.settings_row{
+    position: relative;
+    min-height: 100px;
+    padding: 1rem;
+}
+.settings_row:after{
+     content:'';
+  position:absolute;
+  bottom:0;
+    background:grey;
+    left: 50%;
+  height:3px;
+  transform: translate(-50%,0);
+    width: 98%;
+  border-radius:10px 10px 10px 10px;
+}
+.rounded{
+    border-radius: 100%!important;
+}
+.profile_img{
+    border: .1rem grey solid;
+    width: 8em;
+    height: 8em;
+}
+#profile_img_input{
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+button {
+    display: inline-block;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0;
+    text-decoration: none;
+    background: #0069ed;
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out,
+                transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 5px;
+    height: 3.5rem;
+
+}
+.margin-top{
+    margin-top: 1rem;
+}
+.align-items-center{
+    align-items: center;
+}
+
+button:hover,
+button:focus {
+    background: #0053ba;
+}
+
+button:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+button:active {
+    transform: scale(0.99);
+}
+#profile_input_overwrite {
+border-radius: 5px;
+    height: 3.5rem;
+
+}

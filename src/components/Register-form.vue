@@ -1,0 +1,123 @@
+<template>
+    <form @submit="register">
+	<div class="login" >
+		<div class="login-screen">
+			<div class="app-title">
+				<h1>Register</h1>
+			</div>
+				{{this.errorMsg}}
+			<div class="login-form">
+				<div class="control-group">
+				<input type="text" required v-model="username" class="login-field" value="" placeholder="username" name="username">
+				<label class="login-field-icon fui-user" for="login-name"></label>
+				</div>
+
+				<div class="control-group">
+				<input type="password" required v-model="password" class="login-field" value="" placeholder="password" name="password">
+				<label class="login-field-icon fui-lock" for="login-pass"></label>
+				</div>
+                <div class="control-group">
+				<input type="email" required v-model="email" class="login-field" value="" placeholder="youremal@gmail.com" name="email">
+				<label class="login-field-icon fui-lock" for="login-email"></label>
+				</div>
+
+                <input type="submit" value="Register" class="btn btn-primary btn-large btn-block" >
+			    <br>
+			</div>
+		</div>
+	</div>
+</form>
+
+</template>
+
+<script>
+    export default {
+        name: "Register-form",
+		data(){
+            return{
+                username:'',
+				password:'',
+				email:'',
+				errorMsg: ''
+			}
+		},
+		methods:{
+            register (e) {
+				e.preventDefault();
+                this.$store.dispatch('register', {email: this.email, password: this.password, username: this.username})
+            },
+
+    }}
+</script>
+
+<style scoped>
+* {
+box-sizing: border-box;
+}
+
+*:focus {
+	outline: none;
+}
+
+.login {
+margin: 20px auto;
+width: 300px;
+}
+.login-screen {
+background-color: #FFF;
+padding: 20px;
+border-radius: 5px
+}
+
+.app-title {
+text-align: center;
+color: #777;
+}
+
+.login-form {
+text-align: center;
+}
+.control-group {
+margin-bottom: 10px;
+}
+
+input {
+text-align: center;
+background-color: #ECF0F1;
+border: 2px solid transparent;
+border-radius: 3px;
+font-size: 16px;
+font-weight: 200;
+padding: 10px 0;
+width: 250px;
+transition: border .5s;
+}
+
+input:focus {
+border: 2px solid #3498DB;
+box-shadow: none;
+}
+
+.btn {
+  border: 2px solid transparent;
+  background: #3498DB;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 10px 0;
+  text-decoration: none;
+  text-shadow: none;
+  border-radius: 3px;
+  box-shadow: none;
+  transition: 0.25s;
+  display: block;
+  width: 250px;
+  margin: 0 auto;
+}
+
+.btn:hover {
+  background-color: #2980B9;
+}
+
+
+</style>
