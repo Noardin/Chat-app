@@ -13,8 +13,9 @@ import AudioVis from 'vue-audio-visual'
 
 import VueSocketio from 'vue-socket.io-extended'
 import io from 'socket.io-client'
-var $store = io('https://chatapp-backendapi.herokuapp.com/');
-io.set('transports', ['websocket']);
+var $store = io('https://chatapp-backendapi.herokuapp.com/',{
+  transports: ['websocket']
+});
 Vue.use(VueSocketio, $store,store);
 Vue.use(Vuex);
 Vue.use(VueCroppie);
