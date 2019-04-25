@@ -12,8 +12,10 @@ import VueCroppie from 'vue-croppie'
 import AudioVis from 'vue-audio-visual'
 
 import VueSocketio from 'vue-socket.io-extended'
-import io from 'server'
-Vue.use(VueSocketio, io,store);
+import io from 'socket.io-client'
+var $store = io('https://chatapp-backendapi.herokuapp.com/');
+io.set('transports', ['websocket']);
+Vue.use(VueSocketio, $store,store);
 Vue.use(Vuex);
 Vue.use(VueCroppie);
 dom.watch();

@@ -1,0 +1,1 @@
+body,html{padding:0!important;background-color:#3498db;overflow:hidden}#app,body,html{height:100%;margin:0}#app{display:grid;grid-auto-rows:auto 1fr;grid-template-areas:"topnav" "chat_wrapp"}
