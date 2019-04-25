@@ -9,7 +9,7 @@
 
 import Chat_wiew from '../components/Chat_wiew'
  import Chat_input from '../components/Chat_input'
-import $socket from '../socket_instance'
+import io from
 
 
 export default {

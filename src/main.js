@@ -12,8 +12,8 @@ import VueCroppie from 'vue-croppie'
 import AudioVis from 'vue-audio-visual'
 
 import VueSocketio from 'vue-socket.io-extended'
-import $socket from './socket_instance'
-Vue.use(VueSocketio, $socket,store);
+import io from 'server'
+Vue.use(VueSocketio, io,store);
 Vue.use(Vuex);
 Vue.use(VueCroppie);
 dom.watch();
