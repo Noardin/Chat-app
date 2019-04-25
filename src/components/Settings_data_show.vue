@@ -40,7 +40,7 @@
                 return `image with name of ${name}`
             },
             path(img){
-                return 'https://maxchatapp-backend.herokuapp.com/api/get/'+img+'.jpg'
+                return 'https://chatapp-backendapi.herokuapp.com/api/get/'+img+'.jpg'
 
             }
 
