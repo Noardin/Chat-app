@@ -17,7 +17,7 @@ export function update(jwt) {
 
 }
 export function request_passwordchange(jwt) {
-    return axios.post(URL+'request_password_change',{headers: { Authorization: jwt } })
+    return axios.get(URL+'request_password_change',{headers: { Authorization: jwt } })
 
 }
 export function confirm_passwordtoken(jwt, token) {
