@@ -22,9 +22,7 @@
             }
         },
         mounted(){
-            this.$refs.croppieRef.bind({
-                url: this.path(this.UserData.profile_img)
-            })
+
         },
     methods: {
             path(img){
