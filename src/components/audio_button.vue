@@ -50,13 +50,13 @@
                          reader.readAsDataURL(blob);
                          reader.onloadend = function() {
                               base64data = reader.result;
-                                                           that.dataUrl = window.URL.createObjectURL(blob);
-                                                               that.$store.dispatch('submitNewMessage', {
+                             that.dataUrl = window.URL.createObjectURL(blob);
+                             that.$store.dispatch('submitNewMessage', {
                                     audio:true,
-                                    msg:base64data
-                        })
+                                    message:base64data
+                             })
                         }
-                      };
+                    };
 
                 }
             }
