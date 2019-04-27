@@ -195,10 +195,12 @@ actions :{
       return postNewMessage(message, get_cookie('token'))
     },
     Send_password_request(context){
+            console.log('token',get_cookie('token'));
             return request_passwordchange(get_cookie('token'))
                 .then(()=>context.commit('HandleAlerts',{state:true, variant:'success', version:'password_request', text:'success'}))
                 .catch(error=>{
-                                       context.commit('HandleAlerts',{state:true, variant:'warning', version:'password_request', text:'warning'})
+                    console.log(error);
+                    context.commit('HandleAlerts',{state:true, variant:'warning', version:'password_request', text:'warning'})
 
                 })
         },

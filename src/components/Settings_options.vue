@@ -20,7 +20,7 @@
               this.$parent.$refs.cropModal.$refs.change_profileimage.show()
           },
             Send_request(){
-                this.$store.dispatch('Send_password_request').then()
+                this.$store.dispatch('Send_password_request')
             }
         },
         components:{
