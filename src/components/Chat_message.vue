@@ -1,9 +1,9 @@
-<template>
+<template xmlns:v-touch="http://www.w3.org/1999/xhtml">
     <div v-bind:class="[[message.you ? 'you':'other'], {'empty_message':who !== WhoamI(message.you)}]"  class ="upper_message_wrapper ">
         <div class="user_img_wrapper">
             <img  class="user_img" v-bind:src="getImgUrl(message.profile_img)">
         </div>
-        <a variant="primary" v-bind:class="[message.you ? 'you':'other']" class="message_wrapper">
+        <a  variant="primary" @mousedown="HolidngStart" @mouseup="CancelStart" v-click-outside="Toggle" v-touch:longtap="Toggle" v-bind:class="[message.you ? 'you':'other']" class="message_wrapper">
             <b style="color: #000">{{message.nickname}}:</b>
             <div class="msg" v-bind:class="'msg_'+message.id" >
                 <div v-if="!message.audio">{{message.message}}</div>
@@ -33,6 +33,9 @@
           }
         },
         methods:{
+            Toggle(){
+                this.$root.$emit('bv::toggle::collapse', 'menu_'+this.message.id)
+            },
             HolidngStart(e){
                 if (e.type === 'click' && e.button !== 0) {
                     return
@@ -42,6 +45,13 @@
                     this.$root.$emit('bv::toggle::collapse', 'menu_'+this.message.id)
                 }, 2000)
     }
+
+            },
+            CancelStart(){
+                if (this.PressTimer !== null) {
+            clearTimeout(this.PressTimer);
+            this.PressTimer = null;
+             }
 
             },
             getImgUrl(img) {
