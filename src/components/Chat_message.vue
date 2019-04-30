@@ -3,7 +3,7 @@
         <div class="user_img_wrapper">
             <img  class="user_img" v-bind:src="getImgUrl(message.profile_img)">
         </div>
-        <a variant="primary"  v-b-toggle="'menu_'+message.id" v-bind:class="[message.you ? 'you':'other']" class="message_wrapper">
+        <a variant="primary" v-bind:class="[message.you ? 'you':'other']" class="message_wrapper">
             <b style="color: #000">{{message.nickname}}:</b>
             <div class="msg" v-bind:class="'msg_'+message.id" >
                 <div v-if="!message.audio">{{message.message}}</div>
@@ -29,9 +29,21 @@
         props:["who","message"],
         data(){
           return{
+              PressTimer:null
           }
         },
         methods:{
+            HolidngStart(e){
+                if (e.type === 'click' && e.button !== 0) {
+                    return
+                }
+                if (this.PressTimer === null) {
+                this.PressTimer = setTimeout(() => {
+                    this.$root.$emit('bv::toggle::collapse', 'menu_'+this.message.id)
+                }, 2000)
+    }
+
+            },
             getImgUrl(img) {
                 try{
                     return 'https://chatapp-backendapi.herokuapp.com/api/get/'+img+'.jpg'
