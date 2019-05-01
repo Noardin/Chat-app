@@ -3,13 +3,16 @@
         <div class="user_img_wrapper">
             <img  class="user_img" v-bind:src="getImgUrl(message.profile_img)">
         </div>
-        <a  variant="primary" @mousedown="HolidngStart" @mouseup="CancelStart" v-click-outside="Toggle" v-touch:longtap="Toggle" v-bind:class="[message.you ? 'you':'other']" class="message_wrapper">
+        <a  variant="primary" :aria-controls="'menu_'+message.id"
+      :aria-expanded="[showCollapse ? 'true' : 'false']"
+            @mousedown="HolidngStart" @mouseup="CancelStart" v-click-outside="Toggle"
+            v-touch:longtap="Toggle" v-bind:class="[[message.you ? 'you':'other'], [showCollapse ? 'collapsed' : null]]" class="message_wrapper">
             <b style="color: #000">{{message.nickname}}:</b>
             <div class="msg" v-bind:class="'msg_'+message.id" >
                 <div v-if="!message.audio">{{message.message}}</div>
                 <div v-else><AudioMsg v-bind:AudioMessage="message"></AudioMsg></div>
             </div>
-            <b-collapse class="menu mt-2 container-fluid"  v-bind:id="'menu_'+message.id">
+            <b-collapse class="menu mt-2 container-fluid" v-model="showCollapse"  v-bind:id="'menu_'+message.id">
                 <div class="row">
                     <div class="reakce col-sm"><font-awesome-icon icon="smile" /></div>|
                     <div class="upravit col-sm"><font-awesome-icon icon="pen" /></div>|
@@ -23,18 +26,21 @@
 
 <script>
     import AudioMsg from './audio_msg'
+    import ClickOutside from 'vue-click-outside'
     export default {
         name: "Chat_message",
         components: {AudioMsg},
         props:["who","message"],
         data(){
           return{
+              showCollapse:false,
               PressTimer:null
           }
         },
         methods:{
             Toggle(){
-                this.$root.$emit('bv::toggle::collapse', 'menu_'+this.message.id)
+                console.log('toggle');
+                this.showCollapse = false
             },
             HolidngStart(e){
                 if (e.type === 'click' && e.button !== 0) {
@@ -42,8 +48,9 @@
                 }
                 if (this.PressTimer === null) {
                 this.PressTimer = setTimeout(() => {
-                    this.$root.$emit('bv::toggle::collapse', 'menu_'+this.message.id)
-                }, 2000)
+                    this.showCollapse=true;
+                    console.log('hold')
+                }, 1000)
     }
 
             },
@@ -72,6 +79,9 @@
                     return 'other'
                 }
             }
+        },
+        directives:{
+            ClickOutside
         }
     }
 </script>

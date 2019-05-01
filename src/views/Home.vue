@@ -32,12 +32,14 @@ export default {
 
     methods: {
         Emit(msg){
-                       this.$store.dispatch('uploadMessage',msg)
-                .then()
+            this.$store.dispatch('uploadMessage',msg)
         }
 
       },created(){
-        this.$socket.on('my response',(msg)=>this.Emit(msg))
+        this.$socket.on('my response',(msg)=>{
+            console.log('emitted');
+            this.Emit(msg)
+        })
     }
     }
 

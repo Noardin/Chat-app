@@ -4,7 +4,7 @@ import Home from './views/Home.vue'
 import Login from './views/Login'
 import password_change from './components/settings_change_password'
 import {store}from './store/store'
-
+import {$socket} from './main'
 Vue.use(Router);
 
 const router = new Router({
@@ -18,11 +18,19 @@ const router = new Router({
         if (!store.getters.isAuthenticated) {
           next('/login')
         } else {
+            $socket.connect();
             if (store.getters.UserData == null){
+
                 store.dispatch('Update');
             }
           next()
         }
+
+      },
+      beforeRouteLeave(to,from, next){
+          console.log('disconnect');
+          $socket.disconnect();
+          next()
       }
     },
       {
@@ -102,5 +110,6 @@ const router = new Router({
 router.beforeEach((to, from, next)=>{
   store.commit('HandleAlerts',{state:false});
     next()
+
 });
 export default router
