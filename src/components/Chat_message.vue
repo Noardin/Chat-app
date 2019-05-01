@@ -5,8 +5,7 @@
         </div>
         <a  variant="primary" :aria-controls="'menu_'+message.id"
       :aria-expanded="[showCollapse ? 'true' : 'false']"
-            @mousedown="HolidngStart" @mouseup="CancelStart" v-click-outside="Toggle"
-            v-touch:longtap="Toggle" v-bind:class="[[message.you ? 'you':'other'], [showCollapse ? 'collapsed' : null]]" class="message_wrapper">
+            v-touch:longtap="Toggle" v-click-outside="CloseonClick" v-bind:class="[[message.you ? 'you':'other'], [showCollapse ? 'collapsed' : null]]" class="message_wrapper">
             <b style="color: #000">{{message.nickname}}:</b>
             <div class="msg" v-bind:class="'msg_'+message.id" >
                 <div v-if="!message.audio">{{message.message}}</div>
@@ -14,9 +13,30 @@
             </div>
             <b-collapse class="menu mt-2 container-fluid" v-model="showCollapse"  v-bind:id="'menu_'+message.id">
                 <div class="row">
-                    <div class="reakce col-sm"><font-awesome-icon icon="smile" /></div>|
-                    <div class="upravit col-sm"><font-awesome-icon icon="pen" /></div>|
-                    <div class="vymazat col-sm"><font-awesome-icon icon="trash" /></div>
+                    <transition   name="expand"
+                                @enter="enter"
+                                  @after-enter="afterEnter"
+                                    @leave="leave">
+                    <div ref="reakce" @mouseenter="expandReactions" @mouseleave="shrinkReactions" id="reakce" class="col">
+                        <div class="row">
+                             <div class="col"></div><font-awesome-icon icon="smile" />
+
+                            <div class="col" v-if="expanded">
+                                <div ref="choices" class="row">
+                                    <div class="col">a</div>
+                                    <div class="col">x</div>
+                                    <div class="col">l</div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </transition>
+                    <div ref="upravit" class="upravit col"><font-awesome-icon icon="pen" v-if="!expanded" /></div>
+                    <div ref="vymazat" class="vymazat col"><font-awesome-icon icon="trash" v-if="!expanded" /></div>
                 </div>
 
             </b-collapse>
@@ -33,34 +53,55 @@
         props:["who","message"],
         data(){
           return{
+              expanded:false,
               showCollapse:false,
               PressTimer:null
           }
         },
         methods:{
+            enter() {
+
+            },
+            afterEnter() {
+                this.$refs.reakce.style.width="100%"
+            },
+            leave() {
+                 this.$refs.reakce.style.width="auto"
+            },
+            shrinkReactions(){
+                this.expanded = false;
+
+            },
+            expandReactions(){
+                this.expanded = true;
+
+            },
             Toggle(){
                 console.log('toggle');
+                this.showCollapse = !this.showCollapse
+            },
+            CloseonClick() {
                 this.showCollapse = false
             },
-            HolidngStart(e){
-                if (e.type === 'click' && e.button !== 0) {
-                    return
-                }
-                if (this.PressTimer === null) {
-                this.PressTimer = setTimeout(() => {
-                    this.showCollapse=true;
-                    console.log('hold')
-                }, 1000)
-    }
+    //         HolidngStart(e){
+    //             if (e.type === 'click' && e.button !== 0) {
+    //                 return
+    //             }
+    //             if (this.PressTimer === null) {
+    //             this.PressTimer = setTimeout(() => {
+    //                 this.showCollapse=true;
+    //                 console.log('hold')
+    //             }, 1000)
+    // }
+    //
+    //         },
+    //         CancelStart(){
+    //             if (this.PressTimer !== null) {
+    //         clearTimeout(this.PressTimer);
+    //         this.PressTimer = null;
+    //          }
 
-            },
-            CancelStart(){
-                if (this.PressTimer !== null) {
-            clearTimeout(this.PressTimer);
-            this.PressTimer = null;
-             }
-
-            },
+            // },
             getImgUrl(img) {
                 try{
                     return 'https://chatapp-backendapi.herokuapp.com/api/get/'+img+'.jpg'
@@ -87,6 +128,22 @@
 </script>
 
 <style scoped>
+    * {
+  will-change: width;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+   .expand-enter-active,
+.expand-leave-active {
+  transition: width 1s ease-in-out;
+  overflow: hidden;
+}
+   .expand-enter,
+.expand-leave-to {
+  width: 0;
+}
+
 .upper_message_wrapper{
      margin-top: 20px;
     padding-bottom: 10px;
@@ -196,7 +253,9 @@ img.user_img{
 .empty_message{
     visibility: hidden;
 }
-
+#reakce{
+    background-color: gray;
+}
 .menu div{
     display: flex;
     align-items: center;
@@ -205,4 +264,5 @@ img.user_img{
 .msg{
     padding: 0.5rem;
 }
+
 </style>

@@ -47,7 +47,9 @@
         },updated(){
                        var container = this.$refs.wrapper;
                        container.scrollTop = container.scrollHeight
-        }
+        },
+
+
     }
 </script>
 

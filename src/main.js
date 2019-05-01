@@ -11,14 +11,11 @@ import vuecookies from 'vue-cookies'
 import VueCroppie from 'vue-croppie'
 import AudioVis from 'vue-audio-visual'
 import Vuetouch from 'vue2-touch-events'
-import VueSocketio from 'vue-socket.io-extended'
 import Clickoutside from 'vue-click-outside'
-import io from 'socket.io-client'
-export const $socket = io('https://chatapp-backendapi.herokuapp.com/',{
-  transports: ['websocket']
-});
+import {$socket} from './socketio_io'
 
-Vue.use(VueSocketio, $socket,store);
+
+
 Vue.use(Vuex);
 Vue.use(VueCroppie);
 dom.watch();
@@ -29,11 +26,15 @@ Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.config.productionTip = false;
 Vue.use(vuecookies);
 Vue.use(AudioVis);
-$socket.disconnect();
+
 $socket.on('connect', function () {
   console.log('join');
    $socket.emit('join');
 });
+$socket.on('my response',(msg)=>{
+            console.log('emitted');
+            store.dispatch('uploadMessage',msg)
+        });
 
 new Vue({
 

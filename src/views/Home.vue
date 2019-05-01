@@ -10,6 +10,7 @@
 import Chat_wiew from '../components/Chat_wiew'
  import Chat_input from '../components/Chat_input'
 
+
 export default {
 
   name: 'chat',
@@ -19,8 +20,20 @@ export default {
 
 
   },
+      beforeRouteEnter(to, from, next){
+      next(vm =>{
 
+          if(!vm.$socket.connected)
+          vm.$socket.connect()
+      })
+    },
 
+        beforeRouteLeave(to,from, next){
+          console.log('disconnect');
+          this.$socket.emit('leave');
+          this.$socket.disconnect();
+          next()
+      },
     data(){
         return{
 
@@ -36,10 +49,7 @@ export default {
         }
 
       },created(){
-        this.$socket.on('my response',(msg)=>{
-            console.log('emitted');
-            this.Emit(msg)
-        })
+
     }
     }
 

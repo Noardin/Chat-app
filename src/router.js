@@ -4,7 +4,8 @@ import Home from './views/Home.vue'
 import Login from './views/Login'
 import password_change from './components/settings_change_password'
 import {store}from './store/store'
-import {$socket} from './main'
+import VueSocketio from 'vue-socket.io-extended'
+import {$socket} from './socketio_io'
 Vue.use(Router);
 
 const router = new Router({
@@ -18,7 +19,9 @@ const router = new Router({
         if (!store.getters.isAuthenticated) {
           next('/login')
         } else {
-            $socket.connect();
+             if(!Vue.prototype.$socket){
+              Vue.use(VueSocketio, $socket, store);
+          }
             if (store.getters.UserData == null){
 
                 store.dispatch('Update');
@@ -27,11 +30,7 @@ const router = new Router({
         }
 
       },
-      beforeRouteLeave(to,from, next){
-          console.log('disconnect');
-          $socket.disconnect();
-          next()
-      }
+
     },
       {
         path:'/audio',
