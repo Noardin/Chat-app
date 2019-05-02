@@ -12,31 +12,23 @@
                 <div v-else><AudioMsg v-bind:AudioMessage="message"></AudioMsg></div>
             </div>
             <b-collapse class="menu mt-2 container-fluid" v-model="showCollapse"  v-bind:id="'menu_'+message.id">
-                <div class="row">
-                    <transition   name="expand"
-                                @enter="enter"
-                                  @after-enter="afterEnter"
-                                    @leave="leave">
-                    <div ref="reakce" @mouseenter="expandReactions" @mouseleave="shrinkReactions" id="reakce" class="col">
-                        <div class="row">
-                             <div class="col"></div><font-awesome-icon icon="smile" />
+                <div ref="options" class="options">
+                    <div ref="reakce" :class="expanding ? 'expanding':''" @click="expandReactions" id="reakce">
 
-                            <div class="col" v-if="expanded">
-                                <div ref="choices" class="row">
-                                    <div class="col">a</div>
-                                    <div class="col">x</div>
-                                    <div class="col">l</div>
-                                </div>
+                        <div class="center-flex"><font-awesome-icon icon="smile" /></div>
+                            <transition-group tag="div" name="fade" class="choices" v-if="expanding">
+                                    <div :key="'like'" class="center-flex"><font-awesome-icon icon="heart"/></div>
+                                    <div :key="'XD'" class="center-flex"><font-awesome-icon icon="laugh-squint"/></div>
+                                    <div :key="'angry'" class="center-flex"><font-awesome-icon icon="angry"/></div>
 
-                            </div>
+                            </transition-group>
 
                         </div>
 
-
-                    </div>
-                </transition>
-                    <div ref="upravit" class="upravit col"><font-awesome-icon icon="pen" v-if="!expanded" /></div>
-                    <div ref="vymazat" class="vymazat col"><font-awesome-icon icon="trash" v-if="!expanded" /></div>
+                    <transition-group name="fade" class="message_update_choices">
+                    <div :key="'upravit'" ref="upravit" class="upravit center-flex"><font-awesome-icon icon="pen" v-if="!expanding"/></div>
+                    <div :key="'vymazat'" ref="vymazat" class="vymazat center-flex"><font-awesome-icon icon="trash" v-if="!expanding"/></div>
+                    </transition-group>
                 </div>
 
             </b-collapse>
@@ -54,8 +46,11 @@
         data(){
           return{
               expanded:false,
+              expanding:false,
               showCollapse:false,
-              PressTimer:null
+              PressTimer:null,
+              expand_percent:33,
+              expand_percent2:0
           }
         },
         methods:{
@@ -63,17 +58,59 @@
 
             },
             afterEnter() {
-                this.$refs.reakce.style.width="100%"
-            },
-            leave() {
-                 this.$refs.reakce.style.width="auto"
-            },
-            shrinkReactions(){
-                this.expanded = false;
 
             },
+            leave() {
+
+            },
+
             expandReactions(){
-                this.expanded = true;
+                // this.$refs.options.style.gridTemplateColumns="1fr 0fr 0fr";
+                var anim = setInterval(frame, 5);
+                var that = this;
+                function frame() {
+                    if (!that.expanded){
+                        that.expanding = true;
+                        if(that.expand_percent2 ===75){
+                        console.log(that.expand_percent2);
+                        clearInterval(anim);
+                        that.expanded = true;
+                        }else{
+                            if(that.expand_percent ===0){
+                            console.log(that.expand_percent2);
+
+                            }else{
+
+                                that.expand_percent = that.expand_percent-1;
+                                that.$refs.options.style.gridTemplateColumns=100-that.expand_percent+'% '+that.expand_percent*2+'%'
+
+                            }
+                            that.expand_percent2 = that.expand_percent2+1;
+                            that.$refs.reakce.style.gridTemplateColumns=100-that.expand_percent2+'% '+that.expand_percent2+'%'
+                        }
+                    }else{
+                        that.expanding = false;
+                         if(that.expand_percent2 === 0){
+                        console.log(that.expand_percent);
+                        clearInterval(anim);
+                        that.expanded = false;
+                        }else{
+                             if(that.expand_percent ===33){
+                            console.log(that.expand_percent2);
+                            }else{
+                                that.expand_percent = that.expand_percent+1;
+                                that.$refs.options.style.gridTemplateColumns=100-that.expand_percent*2+'% '+that.expand_percent*2+'%';
+
+                            }
+
+                            that.expand_percent2 = that.expand_percent2-1;
+                            that.$refs.reakce.style.gridTemplateColumns=100-that.expand_percent2+'% '+that.expand_percent2+'%'
+
+                        }
+                    }
+
+                }
+
 
             },
             Toggle(){
@@ -128,27 +165,17 @@
 </script>
 
 <style scoped>
-    * {
-  will-change: width;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-  perspective: 1000px;
-}
-   .expand-enter-active,
-.expand-leave-active {
-  transition: width 1s ease-in-out;
-  overflow: hidden;
-}
-   .expand-enter,
-.expand-leave-to {
-  width: 0;
-}
+    .fade-enter-active, .fade-leave-active {
+  transition: opacity 1s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+    }
 
 .upper_message_wrapper{
      margin-top: 20px;
     padding-bottom: 10px;
     display: grid;
-
 
 }
 .nic_tu_neni{
@@ -254,15 +281,39 @@ img.user_img{
     visibility: hidden;
 }
 #reakce{
-    background-color: gray;
+    transition:all 1s;
+    border-radius: .5rem;
+    display: grid;
+    grid-template-columns: 1fr 0;
 }
-.menu div{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.expanding{
+    background-color: black;
+    color: white;
 }
 .msg{
     padding: 0.5rem;
 }
+#reakce div{
+    width: 100%;
+    height: 100%;
+}
+.center-flex{
+    padding: .3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.choices{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+    .options{
 
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+    }
+    .message_update_choices{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
 </style>
