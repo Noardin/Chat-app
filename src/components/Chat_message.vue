@@ -17,9 +17,9 @@
 
                         <div class="center-flex"><font-awesome-icon icon="smile" @click="expandReactions" class="pointer"/></div>
                             <transition-group tag="div" name="fade" class="choices" v-if="expanding">
-                                    <div :key="'like'" class="center-flex">{{message.reakce.like}}<font-awesome-icon icon="heart" class="pointer"/></div>
-                                    <div :key="'XD'" class="center-flex">{{message.reakce.XD}}<font-awesome-icon icon="laugh-squint" class="pointer"/></div>
-                                    <div :key="'angry'" class="center-flex">{{message.reakce.angry}}<font-awesome-icon icon="angry" class="pointer"/></div>
+                                    <div :key="'like'" class="center-flex">{{reakce.like}}<font-awesome-icon icon="heart" class="pointer" @click="reakce.like++"/></div>
+                                    <div :key="'XD'" class="center-flex">{{reakce.XD}}<font-awesome-icon icon="laugh-squint" class="pointer" @click="reakce.XD++"/></div>
+                                    <div :key="'angry'" class="center-flex">{{reakce.angry}}<font-awesome-icon icon="angry" class="pointer" @click="reakce.angry++" /></div>
 
                             </transition-group>
 
@@ -50,7 +50,13 @@
               showCollapse:false,
               PressTimer:null,
               expand_percent:33,
-              expand_percent2:0
+              expand_percent2:0,
+              reakce:{
+                  like: this.message.reakce.like,
+                  XD:this.message.reakce.XD,
+                  angry:this.message.reakce.angry
+
+              }
           }
         },
         methods:{
