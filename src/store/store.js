@@ -135,7 +135,9 @@ actions :{
                 id: message.msg_id,
                 profile_img: message.profile_img,
                 you: you,
-                date: message.date
+                date: message.date,
+                reakce:message.reakce
+
             };
             context.commit('newMessage',Message)
         },
