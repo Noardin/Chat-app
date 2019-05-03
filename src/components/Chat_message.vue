@@ -13,9 +13,9 @@
             </div>
             <b-collapse class="menu mt-2 container-fluid" v-model="showCollapse"  v-bind:id="'menu_'+message.id">
                 <div ref="options" class="options">
-                    <div ref="reakce" :class="expanding ? 'expanding':''" @click="expandReactions" id="reakce">
+                    <div ref="reakce" :class="expanding ? 'expanding':''"  id="reakce">
 
-                        <div class="center-flex"><font-awesome-icon icon="smile" /></div>
+                        <div class="center-flex"><font-awesome-icon icon="smile" @click="expandReactions"/></div>
                             <transition-group tag="div" name="fade" class="choices" v-if="expanding">
                                     <div :key="'like'" class="center-flex"><font-awesome-icon icon="heart"/></div>
                                     <div :key="'XD'" class="center-flex"><font-awesome-icon icon="laugh-squint"/></div>
