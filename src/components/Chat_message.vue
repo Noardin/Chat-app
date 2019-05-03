@@ -15,19 +15,19 @@
                 <div ref="options" class="options">
                     <div ref="reakce" :class="expanding ? 'expanding':''"  id="reakce">
 
-                        <div class="center-flex"><font-awesome-icon icon="smile" @click="expandReactions"/></div>
+                        <div class="center-flex"><font-awesome-icon icon="smile" @click="expandReactions" class="pointer"/></div>
                             <transition-group tag="div" name="fade" class="choices" v-if="expanding">
-                                    <div :key="'like'" class="center-flex"><font-awesome-icon icon="heart"/></div>
-                                    <div :key="'XD'" class="center-flex"><font-awesome-icon icon="laugh-squint"/></div>
-                                    <div :key="'angry'" class="center-flex"><font-awesome-icon icon="angry"/></div>
+                                    <div :key="'like'" class="center-flex"><font-awesome-icon icon="heart" class="pointer"/></div>
+                                    <div :key="'XD'" class="center-flex"><font-awesome-icon icon="laugh-squint" class="pointer"/></div>
+                                    <div :key="'angry'" class="center-flex"><font-awesome-icon icon="angry" class="pointer"/></div>
 
                             </transition-group>
 
                         </div>
 
                     <transition-group name="fade" class="message_update_choices">
-                    <div :key="'upravit'" ref="upravit" class="upravit center-flex"><font-awesome-icon icon="pen" v-if="!expanding"/></div>
-                    <div :key="'vymazat'" ref="vymazat" class="vymazat center-flex"><font-awesome-icon icon="trash" v-if="!expanding"/></div>
+                    <div :key="'upravit'" ref="upravit" class="upravit center-flex"><font-awesome-icon icon="pen" v-if="!expanding" class="pointer"/></div>
+                    <div :key="'vymazat'" ref="vymazat" class="vymazat center-flex"><font-awesome-icon icon="trash" v-if="!expanding" class="pointer"/></div>
                     </transition-group>
                 </div>
 
@@ -165,6 +165,9 @@
 </script>
 
 <style scoped>
+    .pointer{
+        cursor:pointer;
+    }
     .fade-enter-active, .fade-leave-active {
   transition: opacity 1s;
     }
