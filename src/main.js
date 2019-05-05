@@ -36,6 +36,10 @@ $socket.on('my response',(msg)=>{
             store.dispatch('uploadMessage',msg)
         });
 
+$socket.on('updatereactions',(data)=>{
+        console.log(data);
+        store.commit('UpdateMyReactions', data)
+});
 new Vue({
 
   router,

@@ -12,8 +12,12 @@ export function postNewMessage (message, jwt) {
   return axios.post(URL+'Messages', message,  {headers: { Authorization: jwt } })
 }
 
-export function update(jwt) {
-    return axios.get(URL+'update_userdata',{headers: { Authorization: jwt } })
+export function update(jwt, reactions) {
+    return axios.get(URL+'update_userdata', reactions, {headers: { Authorization: jwt } })
+
+}
+export function update_reactions(jwt, reactions) {
+    return axios.post(URL+'update_reactions',reactions,{headers:{Authorization:jwt}})
 
 }
 export function request_passwordchange(jwt) {

@@ -17,9 +17,9 @@
 
                         <div class="center-flex"><font-awesome-icon icon="smile" @click="expandReactions" class="pointer"/></div>
                             <transition-group tag="div" name="fade" class="choices" v-if="expanding">
-                                    <div :key="'like'" class="center-flex">{{reakce.like}}<font-awesome-icon icon="heart" class="pointer" @click="reakce.like++"/></div>
-                                    <div :key="'XD'" class="center-flex">{{reakce.XD}}<font-awesome-icon icon="laugh-squint" class="pointer" @click="reakce.XD++"/></div>
-                                    <div :key="'angry'" class="center-flex">{{reakce.angry}}<font-awesome-icon icon="angry" class="pointer" @click="reakce.angry++" /></div>
+                                    <div :key="'like'" class="center-flex">{{message.reakce.like}}<font-awesome-icon icon="heart" class="pointer" @click="reakce.like++"/></div>
+                                    <div :key="'XD'" class="center-flex">{{message.reakce.XD}}<font-awesome-icon icon="laugh-squint" class="pointer" @click="reakce.XD++"/></div>
+                                    <div :key="'angry'" class="center-flex">{{message.reakce.angry}}<font-awesome-icon icon="angry" class="pointer" @click="reakce.angry++" /></div>
 
                             </transition-group>
 
@@ -54,7 +54,9 @@
               reakce:{
                   like: this.message.reakce.like,
                   XD:this.message.reakce.XD,
-                  angry:this.message.reakce.angry
+                  angry:this.message.reakce.angry,
+                  id:this.message.id,
+                  date:this.message.date
 
               }
           }
@@ -126,25 +128,7 @@
             CloseonClick() {
                 this.showCollapse = false
             },
-    //         HolidngStart(e){
-    //             if (e.type === 'click' && e.button !== 0) {
-    //                 return
-    //             }
-    //             if (this.PressTimer === null) {
-    //             this.PressTimer = setTimeout(() => {
-    //                 this.showCollapse=true;
-    //                 console.log('hold')
-    //             }, 1000)
-    // }
     //
-    //         },
-    //         CancelStart(){
-    //             if (this.PressTimer !== null) {
-    //         clearTimeout(this.PressTimer);
-    //         this.PressTimer = null;
-    //          }
-
-            // },
             getImgUrl(img) {
                 try{
                     return 'https://chatapp-backendapi.herokuapp.com/api/get/'+img+'.jpg'
@@ -163,6 +147,15 @@
                     return 'other'
                 }
             }
+        },
+        watch:{
+          reakce:{
+              deep:true,
+              handler:function (novaHodnota) {
+                    console.log(novaHodnota);
+                    this.$store.dispatch('UpdateReactions', novaHodnota)
+              }
+          }
         },
         directives:{
             ClickOutside
@@ -250,10 +243,11 @@ img.user_img{
      border-radius: 10px;
     padding: 10px;
     height: auto;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
     grid-template-columns:minmax(25vw,auto);
     grid-template-areas: 'name'
-                        'msg';
+                        'msg'
+                        'collapse';
 
 }
 .message_wrapper b{

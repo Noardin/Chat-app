@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
-import {confirm_passwordtoken, update,request_passwordchange, update_settings, registerreq, authenticate, postNewMessage, fechtAllMessages} from "../api/index";
+import {update_reactions, confirm_passwordtoken, update,request_passwordchange, update_settings, registerreq, authenticate, postNewMessage, fechtAllMessages} from "../api/index";
 import { isValidJwt, EventBus, get_email, get_cookie, set_cookie, pop_cookie} from "../utils/index";
 
 var today = new Date();
@@ -73,6 +73,10 @@ export const store = new Vuex.Store({
         jwt:{token:''}
 },
 actions :{
+        UpdateReactions(context, reactions){
+            return update_reactions(get_cookie('token'), reactions)
+                .then(response=> console.log(response.data))
+        },
 
         Update(context){
             return update(get_cookie('token'))
@@ -212,6 +216,21 @@ actions :{
     }
 },
  mutations:{
+        UpdateMyReactions(state, payload){
+            state.Messages.forEach(function (date) {
+                if(date.date === payload.date){
+                    console.log('date', date.date);
+                    date.messages.forEach(function (message) {
+                        if(message.id === payload.id){
+                            console.log('message_id', message.id);
+                                message.reakce.like = payload.like;
+                                message.reakce.XD = payload.XD;
+                                message.reakce.angry = payload.angry;
+                        }
+                    })
+                }
+            })
+        },
         HandleAlerts(state,payload){
             var args = Object.keys(payload).length;
             if (args === 1){
