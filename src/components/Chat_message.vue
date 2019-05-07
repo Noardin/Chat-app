@@ -17,9 +17,12 @@
 
                         <div class="center-flex"><font-awesome-icon icon="smile" @click="expandReactions" class="pointer"/></div>
                             <transition-group tag="div" name="fade" class="choices" v-if="expanding">
-                                    <div :key="'like'" class="center-flex">{{message.reakce.like}}<font-awesome-icon icon="heart" class="pointer" @click="reakce.like++"/></div>
-                                    <div :key="'XD'" class="center-flex">{{message.reakce.XD}}<font-awesome-icon icon="laugh-squint" class="pointer" @click="reakce.XD++"/></div>
-                                    <div :key="'angry'" class="center-flex">{{message.reakce.angry}}<font-awesome-icon icon="angry" class="pointer" @click="reakce.angry++" /></div>
+                                    <div :key="'like'" class="center-flex">{{message.reakce.like}}
+                                        <font-awesome-icon icon="heart" class="pointer" @click="UpdateReactions('like')"/></div>
+                                    <div :key="'XD'" class="center-flex">{{message.reakce.XD}}
+                                        <font-awesome-icon icon="laugh-squint" class="pointer" @click="UpdateReactions('XD')"/></div>
+                                    <div :key="'angry'" class="center-flex">{{message.reakce.angry}}
+                                        <font-awesome-icon icon="angry" class="pointer" @click="UpdateReactions('angry')" /></div>
 
                             </transition-group>
 
@@ -51,27 +54,9 @@
               PressTimer:null,
               expand_percent:33,
               expand_percent2:0,
-              reakce:{
-                  like: this.message.reakce.like,
-                  XD:this.message.reakce.XD,
-                  angry:this.message.reakce.angry,
-                  id:this.message.id,
-                  date:this.message.date
-
-              }
           }
         },
         methods:{
-            enter() {
-
-            },
-            afterEnter() {
-
-            },
-            leave() {
-
-            },
-
             expandReactions(){
                 // this.$refs.options.style.gridTemplateColumns="1fr 0fr 0fr";
                 var anim = setInterval(frame, 5);
@@ -121,6 +106,15 @@
 
 
             },
+            UpdateReactions(reaction){
+
+                this.$store.dispatch('UpdateReactions', {reakce:{
+                    id: this.message.id,
+                        date:this.message.date,
+
+                    },changed:reaction})
+
+            },
             Toggle(){
                 console.log('toggle');
                 this.showCollapse = !this.showCollapse
@@ -147,15 +141,6 @@
                     return 'other'
                 }
             }
-        },
-        watch:{
-          reakce:{
-              deep:true,
-              handler:function (novaHodnota) {
-                    console.log(novaHodnota);
-                    this.$store.dispatch('UpdateReactions', novaHodnota)
-              }
-          }
         },
         directives:{
             ClickOutside
