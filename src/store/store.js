@@ -238,6 +238,7 @@ export const store = new Vuex.Store({
     mutations:{
 
         UpdateDeletedMSG(state, payload){
+            console.log(payload);
             state.Messages.forEach(function (date) {
                 if(date.date === payload.date){
                     console.log('date', date.date);
