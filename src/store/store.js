@@ -239,6 +239,7 @@ export const store = new Vuex.Store({
 
         UpdateDeletedMSG(state, payload){
             console.log(payload);
+            payload = payload[0];
             state.Messages.forEach(function (date) {
                 if(date.date === payload.date){
                     console.log('date', date.date);
