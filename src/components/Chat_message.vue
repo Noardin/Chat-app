@@ -19,7 +19,7 @@
 
             </div>
             <b-collapse class="menu mt-2 container-fluid" v-model="showCollapse"  v-bind:id="'menu_'+message.id">
-                <div ref="options" class="options">
+                <div ref="options" class="options" v-if="!message.deleted">
                     <div ref="reakce" :class="expanding ? 'expanding':''"  id="reakce">
 
                         <div class="center-flex"><font-awesome-icon icon="smile" @click="expandReactions" class="pointer"/></div>
