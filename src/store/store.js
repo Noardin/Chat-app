@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
-import {update_reactions, confirm_passwordtoken, update,request_passwordchange, update_settings, registerreq, authenticate, postNewMessage, fechtAllMessages} from "../api/index";
+import {delete_message, update_reactions, confirm_passwordtoken, update,request_passwordchange, update_settings, registerreq, authenticate, postNewMessage, fechtAllMessages} from "../api/index";
 import { isValidJwt, EventBus, get_email, get_cookie, set_cookie, pop_cookie} from "../utils/index";
 
 var today = new Date();
@@ -71,8 +71,18 @@ export const store = new Vuex.Store({
             currentMessage:[],
         userData:null,
         jwt:{token:''}
-},
-actions :{
+    },
+    actions :{
+        deleteMessage(context, message){
+            return delete_message(message, get_cookie('token'))
+                .then(response=>{
+                    console.log('deleted', response.data.deleted);
+                    if (response.data.deleted){
+                        context.commit('UpdateDeletedMSG', response.data.data)
+                    }
+                })
+        },
+
         UpdateReactions(context, reactions){
             return update_reactions(get_cookie('token'), reactions)
                 .then(response=> console.log(response.data))
@@ -88,11 +98,13 @@ actions :{
               }}));
 
         },
+
         Logout(context){
             pop_cookie('token');
             context.commit('logout');
             router.go('login')
         },
+
         updateSettings(context, userData){
             return update_settings(userData, get_cookie('token'))
                 .then(response => {
@@ -114,6 +126,7 @@ actions :{
                 })
 
         },
+
         fetchMessages(context){
             return fechtAllMessages(get_cookie('token'))
                 .then(response =>{
@@ -122,6 +135,7 @@ actions :{
                 } )
 
         },
+
         uploadMessage(context, message){
             var you = true;
             message = JSON.parse(message);
@@ -140,12 +154,14 @@ actions :{
                 profile_img: message.profile_img,
                 you: you,
                 date: message.date,
-                reakce:message.reakce
+                reakce:message.reakce,
+                deleted:false
 
             };
             context.commit('newMessage',Message)
         },
-  login (context, userData) {
+
+        login (context, userData) {
 
 
       return authenticate(userData)
@@ -183,7 +199,8 @@ actions :{
 
           })
   },
-     register (context, userData) {
+
+        register (context, userData) {
                return registerreq(userData)
       .then(response =>{
           console.log(response.data.registrated);
@@ -197,10 +214,12 @@ actions :{
                EventBus.$emit('failedRegistering: ', error)
       })
   },
-    submitNewMessage(context, message){
+
+        submitNewMessage(context, message){
       return postNewMessage(message, get_cookie('token'))
     },
-    Send_password_request(context){
+
+        Send_password_request(context){
             console.log('token',get_cookie('token'));
             return request_passwordchange(get_cookie('token'))
                 .then(()=>context.commit('HandleAlerts',{state:true, variant:'success', version:'password_request', text:'success'}))
@@ -210,12 +229,28 @@ actions :{
 
                 })
         },
-    Authenticate_password_request_token(context, token){
+
+        Authenticate_password_request_token(context, token){
             return confirm_passwordtoken(get_cookie('token'), token)
 
     }
-},
- mutations:{
+    },
+    mutations:{
+
+        UpdateDeletedMSG(state, payload){
+            state.Messages.forEach(function (date) {
+                if(date.date === payload.date){
+                    console.log('date', date.date);
+                    date.messages.forEach(function (message) {
+                        if(message.id === payload.id){
+                            console.log('message_id', message.id);
+                               message.deleted = true
+                        }
+                    })
+                }
+            })
+        },
+
         UpdateMyReactions(state, payload){
             state.Messages.forEach(function (date) {
                 if(date.date === payload.date){
@@ -231,6 +266,7 @@ actions :{
                 }
             })
         },
+
         HandleAlerts(state,payload){
             var args = Object.keys(payload).length;
             if (args === 1){
@@ -244,58 +280,61 @@ actions :{
 
 
         },
-  // isolated data mutations
 
-  //
-  // omitting the other mutation methods...
-  //
-     logout(state){
+        logout(state){
          state.jwt.token = ''
      },
-     newMessage(state,payload){
 
-         state.Messages.forEach(function (value) {
+        newMessage(state,payload){
+
+            state.Messages.forEach(function (value) {
                 if(value.date === payload.date){
                     value.messages.push(payload)
                 }
-         })
+            })
 
      },
-     newMessages(state,payload){
-        var messages = payload.messages;
-        state.Messages =[];
-         messages.forEach(function (date) {
-            state.Messages.push(date)
-         });
-     },
 
-  setUserData (state, payload) {
-       state.userData = payload.userData
-  },
-     updateUserDataFromSettings(state,payload){
+        newMessages(state,payload){
+            var messages = payload.messages;
+            state.Messages =[];
+             messages.forEach(function (date) {
+                state.Messages.push(date)
+             });
+        },
+
+        setUserData (state, payload) {
+            state.userData = payload.userData
+        },
+
+        updateUserDataFromSettings(state,payload){
          var key = Object.keys(payload);
          state.userData[key] = payload[key];
              },
-  setJwtToken (state, payload) {
-       localStorage.token = payload.jwt;
-    state.jwt.token = payload.jwt
-  }
-},
-getters:{
+
+        setJwtToken (state, payload) {
+            localStorage.token = payload.jwt;
+            state.jwt.token = payload.jwt
+        }
+    },
+    getters:{
   // reusable data accessors
-  isAuthenticated () {
-    return isValidJwt(get_cookie('token'))
-  },
-    Messages: state =>{
-      return state.Messages;
+        isAuthenticated () {
+        return isValidJwt(get_cookie('token'))
+      },
+
+        Messages: state =>{
+          return state.Messages;
+        },
+
+        UserData: state =>{
+          return state.userData;
+        },
+
+        AlertData: state=>{
+          return state.alerts;
+        }
     },
-    UserData: state =>{
-      return state.userData;
-    },
-    AlertData: state=>{
-      return state.alerts;
-    }
-},
 
 });
 

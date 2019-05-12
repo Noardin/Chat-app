@@ -39,4 +39,6 @@ export function registerreq(userData) {
     return axios.post(URL+'registrate',{UserData: userData, headers: { 'Access-Control-Allow-Origin': '*' }})
 
 }
-
+export function delete_message(message, jwt) {
+    return axios.delete(URL+'Messages', message,  {headers: { Authorization: jwt } })
+}

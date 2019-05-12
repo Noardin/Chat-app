@@ -8,8 +8,15 @@
             v-touch:longtap="Toggle" v-click-outside="CloseonClick" v-bind:class="[[message.you ? 'you':'other'], [showCollapse ? 'collapsed' : null]]" class="message_wrapper">
             <b style="color: #000">{{message.nickname}}:</b>
             <div class="msg" v-bind:class="'msg_'+message.id" >
-                <div v-if="!message.audio">{{message.message}}</div>
-                <div v-else><AudioMsg v-bind:AudioMessage="message"></AudioMsg></div>
+                <div v-if="!message.deleted">
+                    <div v-if="!message.audio">{{message.message}}</div>
+                    <div v-else><AudioMsg v-bind:AudioMessage="message"></AudioMsg></div>
+                </div>
+
+                <div v-else>
+                    <p style="font-style: italic">THIS MESSAGE WAS DELETED</p>
+                </div>
+
             </div>
             <b-collapse class="menu mt-2 container-fluid" v-model="showCollapse"  v-bind:id="'menu_'+message.id">
                 <div ref="options" class="options">
@@ -25,12 +32,11 @@
                                         <font-awesome-icon icon="angry" class="pointer" @click="UpdateReactions('angry')" /></div>
 
                             </transition-group>
-
                         </div>
 
                     <transition-group name="fade" class="message_update_choices">
                     <div :key="'upravit'" ref="upravit" class="upravit center-flex"><font-awesome-icon icon="pen" v-if="!expanding" class="pointer"/></div>
-                    <div :key="'vymazat'" ref="vymazat" class="vymazat center-flex"><font-awesome-icon icon="trash" v-if="!expanding" class="pointer"/></div>
+                    <div :key="'vymazat'" ref="vymazat" class="vymazat center-flex"><font-awesome-icon icon="trash" @click="vymazat" v-if="!expanding" class="pointer"/></div>
                     </transition-group>
                 </div>
 
@@ -106,6 +112,11 @@
 
 
             },
+
+            vymazat(){
+                this.$store.dispatch('deleteMessage', {'id':this.message.id})
+            },
+
             UpdateReactions(reaction){
 
                 this.$store.dispatch('UpdateReactions', {reakce:{
