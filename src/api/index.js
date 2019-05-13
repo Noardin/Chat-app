@@ -42,3 +42,6 @@ export function registerreq(userData) {
 export function delete_message(message, jwt) {
     return axios.post(URL+'delete_message', message,  {headers: { Authorization: jwt } })
 }
+export function update_message(message, jwt) {
+    return axios.post(URL+'update_message', message,  {headers: { Authorization: jwt } })
+}

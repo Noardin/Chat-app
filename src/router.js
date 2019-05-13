@@ -19,14 +19,14 @@ const router = new Router({
         if (!store.getters.isAuthenticated) {
           next('/login')
         } else {
-             if(!Vue.prototype.$socket){
+            if(!Vue.prototype.$socket){
               Vue.use(VueSocketio, $socket, store);
-          }
-            if (store.getters.UserData == null){
-
-                store.dispatch('Update');
             }
-          next()
+            if (store.getters.UserData == null || store.getters.UserData === undefined){
+              store.dispatch('Update').then(next())
+            }else{
+              next()
+            }
         }
 
       },
@@ -50,16 +50,21 @@ const router = new Router({
             name:'Change_password',
           component: password_change,
             beforeEnter(to, from, next){
-                if (!store.getters.isAuthenticated) {
-                  next('/login')
-                } else {
-                    if (store.getters.UserData == null){
-                        store.dispatch('Update');
-                    }
-                  next()
-                }
+            store.dispatch('Authenticate_password_request_token', to.params.token)
+                .then(response => {
+                    if(response.data.authenticated){
+                      if (store.getters.UserData == null || store.getters.UserData === undefined){
+                            store.dispatch('Update').then(next())
+                      }else{
+                        next()
+                      }
+                  }else{
+                        next('/login')
+                      }
+                });
 
-                    }
+
+            }
         },
              {
                path: 'update',
@@ -69,12 +74,10 @@ const router = new Router({
         ],
         beforeEnter (to, from, next) {
         if (!store.getters.isAuthenticated) {
-
           next('/login')
         }else{
           if (store.getters.UserData == null || store.getters.UserData === undefined){
-                store.dispatch('Update');
-                next()
+                store.dispatch('Update').then(next())
             }else{
             next()
           }
@@ -102,6 +105,7 @@ const router = new Router({
 });
 router.beforeEach((to, from, next)=>{
   store.commit('HandleAlerts',{state:false});
+
     next()
 
 });

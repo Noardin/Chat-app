@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router'
-import {delete_message, update_reactions, confirm_passwordtoken, update,request_passwordchange, update_settings, registerreq, authenticate, postNewMessage, fechtAllMessages} from "../api/index";
+import {update_message, delete_message, update_reactions, confirm_passwordtoken, update,request_passwordchange, update_settings, registerreq, authenticate, postNewMessage, fechtAllMessages} from "../api/index";
 import { isValidJwt, EventBus, get_email, get_cookie, set_cookie, pop_cookie} from "../utils/index";
 
 var today = new Date();
@@ -73,6 +73,9 @@ export const store = new Vuex.Store({
         jwt:{token:''}
     },
     actions :{
+        updateMessage(context, message){
+            return update_message(message, get_cookie('token'))
+        },
         deleteMessage(context, message){
             return delete_message(message, get_cookie('token'))
         },
@@ -230,7 +233,21 @@ export const store = new Vuex.Store({
     }
     },
     mutations:{
-
+        UpdateUpdatedMSG(state, payload){
+            console.log(payload);
+            payload = payload[0];
+            state.Messages.forEach(function (date) {
+                if(date.date === payload.date){
+                    console.log('date', date.date);
+                    date.messages.forEach(function (message) {
+                        if(message.id === payload.id){
+                            console.log('message_id', message.id);
+                               message.message = payload.message
+                        }
+                    })
+                }
+            })
+        },
         UpdateDeletedMSG(state, payload){
             console.log(payload);
             payload = payload[0];

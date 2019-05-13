@@ -29,7 +29,8 @@
         },
         methods:{
             Ulozit(){
-                this.$store.dispatch('updateMessage',{id:this.msg.id, message:this.newmessage}).then(console.log(this.newmessage))
+                this.$store.dispatch('updateMessage',{id:this.msg.id, message:this.newmessage})
+                    .then(console.log(this.newmessage))
 
             },
             Hide(){
@@ -38,7 +39,7 @@
             },
             open(msg){
                 this.msg = msg;
-                this.$refs.chang_value_pop.show()
+                this.$refs.change_value_pop.show()
             }
 
         }

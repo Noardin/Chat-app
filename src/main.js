@@ -45,6 +45,12 @@ $socket.on('deletemsg', (data)=>{
         store.commit('UpdateDeletedMSG', data.data)
     }
 });
+
+$socket.on('updatemsg', (data)=>{
+   if (data.updated){
+       store.commit('UpdateUpdatedMSG', data.data)
+   }
+});
 new Vue({
 
   router,
