@@ -23,7 +23,8 @@ const router = new Router({
               Vue.use(VueSocketio, $socket, store);
             }
             if (store.getters.UserData == null || store.getters.UserData === undefined){
-              store.dispatch('Update').then(next())
+              store.dispatch('Update');
+                next()
             }else{
               next()
             }
@@ -54,7 +55,8 @@ const router = new Router({
                 .then(response => {
                     if(response.data.authenticated){
                       if (store.getters.UserData == null || store.getters.UserData === undefined){
-                            store.dispatch('Update').then(next())
+                            store.dispatch('Update');
+                          next()
                       }else{
                         next()
                       }
@@ -77,7 +79,8 @@ const router = new Router({
           next('/login')
         }else{
           if (store.getters.UserData == null || store.getters.UserData === undefined){
-                store.dispatch('Update').then(next())
+                store.dispatch('Update')
+              next()
             }else{
             next()
           }
