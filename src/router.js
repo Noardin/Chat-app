@@ -50,22 +50,16 @@ const router = new Router({
             name:'Change_password',
           component: password_change,
             beforeEnter(to, from, next){
-            store.dispatch('Authenticate_password_request_token', to.params.token)
-                .then(response => {
-                                   if(response.data.authenticated){
-                      if (store.getters.UserData == null || store.getters.UserData === undefined){
-                            store.dispatch('Update');
-                            next()
-                      }else{
-                        next()
-                      }
-                  }else{
-                        next('/login')
-                      }
-                });
+                if (!store.getters.isAuthenticated) {
+                  next('/login')
+                } else {
+                    if (store.getters.UserData == null){
+                        store.dispatch('Update');
+                    }
+                  next()
+                }
 
-
-            }
+                    }
         },
              {
                path: 'update',

@@ -35,7 +35,7 @@
                         </div>
 
                     <transition-group name="fade" class="message_update_choices">
-                    <div :key="'upravit'" ref="upravit" class="upravit center-flex"><font-awesome-icon icon="pen" v-if="!expanding" class="pointer"/></div>
+                    <div :key="'upravit'" ref="upravit" class="upravit center-flex"><font-awesome-icon icon="pen" @click="upravit" v-if="!expanding" class="pointer"/></div>
                     <div :key="'vymazat'" ref="vymazat" class="vymazat center-flex"><font-awesome-icon icon="trash" @click="vymazat" v-if="!expanding" class="pointer"/></div>
                     </transition-group>
                 </div>
@@ -111,6 +111,10 @@
                 }
 
 
+            },
+
+            upravit(){
+              this.$parent.$emit('OpenMessageChangeModal', {message:this.message, id:this.message.id})
             },
 
             vymazat(){

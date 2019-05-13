@@ -1,6 +1,7 @@
 <template>
   <div class="home" id="chat_wrapper">
-    <Chat_wiew></Chat_wiew>
+    <Modal_message_update ref="ModalMessageUpdate"></Modal_message_update>
+    <Chat_wiew @OpenMessageChangeModal="OpenMessageModal"></Chat_wiew>
     <Chat_input ></Chat_input>
   </div>
 </template>
@@ -9,6 +10,7 @@
 
 import Chat_wiew from '../components/Chat_wiew'
  import Chat_input from '../components/Chat_input'
+import Modal_message_update from '../components/message_modal_text'
 
 
 export default {
@@ -16,9 +18,8 @@ export default {
   name: 'chat',
   components: {
       Chat_wiew,
-      Chat_input
-
-
+      Chat_input,
+      Modal_message_update
   },
       beforeRouteEnter(to, from, next){
       next(vm =>{
@@ -44,6 +45,9 @@ export default {
         },
 
     methods: {
+      OpenMessageModal(msg){
+          this.$refs.ModalMessageUpdate.open(msg)
+      },
         Emit(msg){
             this.$store.dispatch('uploadMessage',msg)
         }

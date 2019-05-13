@@ -75,12 +75,6 @@ export const store = new Vuex.Store({
     actions :{
         deleteMessage(context, message){
             return delete_message(message, get_cookie('token'))
-                .then(response=>{
-                    console.log('deleted', response.data.deleted);
-                    if (response.data.deleted){
-                        context.commit('UpdateDeletedMSG', response.data.data)
-                    }
-                })
         },
 
         UpdateReactions(context, reactions){

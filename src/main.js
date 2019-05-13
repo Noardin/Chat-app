@@ -40,6 +40,11 @@ $socket.on('updatereactions',(data)=>{
         console.log(data);
         store.commit('UpdateMyReactions', data)
 });
+$socket.on('deletemsg', (data)=>{
+    if (data.deleted){
+        store.commit('UpdateDeletedMSG', data.data)
+    }
+});
 new Vue({
 
   router,
