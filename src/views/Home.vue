@@ -1,7 +1,7 @@
 <template>
   <div class="home" id="chat_wrapper">
-    <Modal_message_update ref="ModalMessageUpdate"></Modal_message_update>
-    <Chat_wiew @OpenMessageChangeModal="OpenMessageModal"></Chat_wiew>
+
+    <Chat_wiew ></Chat_wiew>
     <Chat_input ></Chat_input>
   </div>
 </template>
@@ -45,9 +45,7 @@ export default {
         },
 
     methods: {
-      OpenMessageModal(msg){
-          this.$refs.ModalMessageUpdate.open(msg)
-      },
+
         Emit(msg){
             this.$store.dispatch('uploadMessage',msg)
         }

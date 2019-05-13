@@ -1,12 +1,13 @@
 <template>
     <Loader v-if="Dates.length === 0"></Loader>
     <div v-else class="message_holder_wrapper" ref="wrapper" id="messages_display_wrapper">
+        <Modal_message_update ref="ModalMessageUpdate"></Modal_message_update>
         <div class="message_holder">
 
             <div  v-bind:class="'day_wrapper day_'+date.date" v-bind:key="index" v-for="(date, index) in Dates">
                 <div class= "horizontal_date" v-bind:id="'hr_day_'+date.date">{{date.date}}</div>
             <div class="wrapper_you inner_wrapper" >
-                <Chat_message v-bind:who="'you'" v-bind:message="message" v-bind:key="message.id" v-for="message in date.messages"></Chat_message>
+                <Chat_message @OpenMessageChangeModal="OpenMessageModal" v-bind:who="'you'" v-bind:message="message" v-bind:key="message.id" v-for="message in date.messages"></Chat_message>
             </div>
             <div class="wrapper_other inner_wrapper"  >
                  <Chat_message v-bind:key="message.id" v-bind:who="'other'" v-bind:message="message" v-for="message in date.messages"></Chat_message>
@@ -20,12 +21,14 @@
 
 <script>
     import Chat_message from './Chat_message'
+    import Modal_message_update from './message_modal_text'
     import Loader from './Loader'
     export default {
         name: "Chat_wiew",
         components:{
             Chat_message,
-            Loader
+            Loader,
+            Modal_message_update
         },
         data(){
             return{
@@ -41,6 +44,9 @@
             this.fetch()
 
         },methods:{
+            OpenMessageModal(msg){
+          this.$refs.ModalMessageUpdate.open(msg)
+        },
             fetch(){
                 this.$store.dispatch('fetchMessages').then()
             }

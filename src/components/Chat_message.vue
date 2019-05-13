@@ -114,7 +114,7 @@
             },
 
             upravit(){
-              this.$parent.$emit('OpenMessageChangeModal', {message:this.message.message, id:this.message.id})
+              this.$emit('OpenMessageChangeModal', {message:this.message.message, id:this.message.id})
             },
 
             vymazat(){

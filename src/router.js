@@ -79,7 +79,7 @@ const router = new Router({
           next('/login')
         }else{
           if (store.getters.UserData == null || store.getters.UserData === undefined){
-                store.dispatch('Update')
+                store.dispatch('Update');
               next()
             }else{
             next()
