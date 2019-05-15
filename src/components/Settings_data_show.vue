@@ -18,7 +18,7 @@
 </template>
 
 <script>
-
+    import {defaultURL} from '../config'
     export default {
         name: "Settings_data_show",
         props:{
@@ -40,7 +40,7 @@
                 return `image with name of ${name}`
             },
             path(img){
-                return 'https://chatapp-backendapi.herokuapp.com/api/get/'+img+'.jpg'
+                return defaultURL+'api/get/'+img+'.jpg'
 
             }
 

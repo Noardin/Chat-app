@@ -8,6 +8,7 @@
 
 <script>
     import '../assets/croppie.css'
+    import {defaultURL} from '../config'
     export default {
         name: "Cropper",
          props: {
@@ -26,7 +27,7 @@
         },
     methods: {
             path(img){
-                return 'https://maxchatapp-backend.herokuapp.com/api/get/'+img+'.jpg'
+                return defaultURL+'api/get/'+img+'.jpg'
 
             },
             crop() {

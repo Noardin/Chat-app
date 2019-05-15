@@ -1,5 +1,5 @@
 <template>
-    <b-modal class=""  ref="change_value_pop" id="change_value_pop" title="Zde si muzes zemnit prezdivku">
+    <b-modal class=""  ref="change_value_pop" id="change_value_pop" title="Prepis zpravu">
 
 
         <div class="input-group input-group-sm mb-3">

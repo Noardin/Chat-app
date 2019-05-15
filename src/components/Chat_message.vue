@@ -48,6 +48,7 @@
 <script>
     import AudioMsg from './audio_msg'
     import ClickOutside from 'vue-click-outside'
+    import {defaultURL} from '../config'
     export default {
         name: "Chat_message",
         components: {AudioMsg},
@@ -140,14 +141,14 @@
     //
             getImgUrl(img) {
                 try{
-                    return 'https://chatapp-backendapi.herokuapp.com/api/get/'+img+'.jpg'
+                    return defaultURL+'api/get/'+img+'.jpg'
                 }catch (e) {
                     return this.getDefault
                 }
 
             },
             getDefault(){
-                return 'https://maxchatapp-backend.herokuapp.com/api/get/icons8-person-90.jpg'
+                return defaultURL+'api/get/icons8-person-90.jpg'
             },
             WhoamI(msg_who){
                 if (msg_who){

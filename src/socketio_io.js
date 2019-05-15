@@ -1,5 +1,6 @@
 import io from 'socket.io-client'
-export const $socket = io('https://chatapp-backendapi.herokuapp.com/',{
+import {defaultURL} from './config'
+export const $socket = io(defaultURL,{
   transports: ['websocket'],
     forceNew:false,
     autoConnect:false,

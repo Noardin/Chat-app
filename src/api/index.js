@@ -1,6 +1,7 @@
 import axios from 'axios'
+import {defaultURL} from '../config'
 // const URL = 'https://maxchatapp-backend.herokuapp.com/api/';
-var URL ='https://chatapp-backendapi.herokuapp.com/api/';
+var URL =defaultURL+'api/';
 export function update_settings(userData, jwt) {
     return axios.post(URL+'update_settings',{UserData:userData},{headers: { Authorization: jwt } })
 }

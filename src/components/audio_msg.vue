@@ -18,6 +18,7 @@
 </template>
 
 <script>
+    import {defaultURL} from '../config'
     export default {
         name: "Audio-demo",
         components: {},
@@ -29,7 +30,7 @@
         },
         methods: {
             getURL(data) {
-                return 'https://chatapp-backendapi.herokuapp.com/api/get_audio/'+data+'.wav'
+                return defaultURL+'api/get_audio/'+data+'.wav'
             },
             playorStopAudio() {
                 var audios = this.$refs['audio' + this.AudioMessage.id];
