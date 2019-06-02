@@ -44,7 +44,7 @@
                     that.recordingData.push(event.data);
                     };
                     this.audioRecorder.onstop = function(event) {
-                                               var blob = new Blob(that.recordingData, { type: 'audio/wav'});
+                        var blob = new Blob(that.recordingData, { type: 'audio/wav'});
                         var reader = new FileReader();
                          var base64data;
                          reader.readAsDataURL(blob);
@@ -54,7 +54,7 @@
                              that.$store.dispatch('submitNewMessage', {
                                     audio:true,
                                     message:base64data
-                             })
+                             }).then(()=>{that.recordingData = []})
                         }
                     };
 
