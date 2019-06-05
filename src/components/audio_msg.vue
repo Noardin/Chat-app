@@ -1,5 +1,5 @@
 <template>
-    <div class="audio_wrapper container">
+    <div v-if="loaded" class="audio_wrapper container">
         <div class="controls row">
             <div class="play col-2" v-on:click.stop.prevent="playorStopAudio">
                 <div v-show="!isPlaying"><i class="fas fa-play" ></i></div>
@@ -12,9 +12,11 @@
 
 
     <audio :ref="'audio'+AudioMessage.id" @timeupdate="initProgressBar">
-        <source ref="audio" :src="getURL(AudioMessage.message)" type="audio/wav">
+        <source ref="audio" :src="getURL(AudioMessage.message)" @error="loaded = false" type="audio/wav">
     </audio>
+
     </div>
+    <strong style="font-style: italic" v-else>Nepodarilo se nam nacist vasi hlasovou zpravu</strong>
 </template>
 
 <script>
@@ -25,11 +27,13 @@
         props: ['AudioMessage'],
         data() {
             return {
+                loaded:false,
                 isPlaying: false
             }
         },
         methods: {
             getURL(data) {
+                this.loaded = true;
                 return defaultURL+'api/get_audio/'+data+'.wav'
             },
             playorStopAudio() {

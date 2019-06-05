@@ -3,14 +3,14 @@
             <div class="row">
                 <div class="col-md-8">
                     <div class="col">
-                        <div class="row align-items-center justify-content-center"><div class="col-sm-5"><h5>prihlasovaci jmeno:</h5></div><div id="username_label" class="col-sm-3">{{UserData.username}}</div></div>
-                        <div class="row align-items-center justify-content-center"><div class="col-sm-5"><h5>nickname:</h5></div><div id="nickname_label" class="col-sm-3 change_value" @click="PopModal">{{UserData.nickname}}<i class="fas fa-cog"></i></div></div>
-                        <div class="row align-items-center justify-content-center"><div class="col-sm-5"><h5>e-mail:</h5></div><div id="email_label" class="col-sm-3">{{UserData.email}}</div></div>
+                        <div class="row align-items-center justify-content-center"><div class="col-sm-5"><h5>prihlasovaci jmeno:</h5></div><div id="username_label" class="col-sm">{{UserData.username}}</div></div>
+                        <div class="row align-items-center justify-content-center"><div class="col-sm-5"><h5>nickname:</h5></div><div id="nickname_label" class="col-sm change_value" @click="PopModal">{{UserData.nickname}}<i class="fas fa-cog"></i></div></div>
+                        <div class="row align-items-center justify-content-center"><div class="col-sm-5"><h5>e-mail:</h5></div><div id="email_label" class="col-sm">{{UserData.email}}</div></div>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="row justify-content-center align-items-center">
-                        <img v-bind:src="path(UserData.profile_img)" v-bind:alt="alt(UserData.nickname)" id="profile_img_prewiev" class="profile_img rounded"  >
+                        <img v-bind:src="path(UserData.profile_img)" @error="getDefault" v-bind:alt="alt(UserData.nickname)" id="profile_img_prewiev" class="profile_img rounded"  >
                     </div>
                     </div>
             </div>
@@ -33,6 +33,9 @@
             }
         },
         methods:{
+            getDefault(event){
+                event.target.src = defaultURL+'api/get/icons8-person-90.jpg'
+            },
             PopModal(){
                               this.$parent.$refs.textModal.$refs.change_value_pop.show()
             },
@@ -76,11 +79,12 @@
     border-radius: 100%!important;
 }
 .profile_img{
-    border: .1rem grey solid;
+    background-color: white;
+    border: .1rem black solid;
     width: 8em;
     height: 8em;
 }
-    .change_value{
-        cursor: pointer;
+.change_value{
+    cursor: pointer;
     }
 </style>

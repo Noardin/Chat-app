@@ -10,7 +10,6 @@
 
 import Chat_wiew from '../components/Chat_wiew'
  import Chat_input from '../components/Chat_input'
-import Modal_message_update from '../components/message_modal_text'
 
 
 export default {
@@ -19,7 +18,6 @@ export default {
   components: {
       Chat_wiew,
       Chat_input,
-      Modal_message_update
   },
       beforeRouteEnter(to, from, next){
       next(vm =>{
@@ -45,10 +43,6 @@ export default {
         },
 
     methods: {
-
-        Emit(msg){
-            this.$store.dispatch('uploadMessage',msg)
-        }
 
       },created(){
 

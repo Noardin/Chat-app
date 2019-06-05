@@ -1,11 +1,11 @@
 <template xmlns:v-touch="http://www.w3.org/1999/xhtml">
-    <div v-bind:class="[[message.you ? 'you':'other'], {'empty_message':who !== WhoamI(message.you)}]"  class ="upper_message_wrapper ">
+    <div v-bind:class="who"  class ="upper_message_wrapper ">
         <div class="user_img_wrapper">
-            <img  class="user_img" v-bind:src="getImgUrl(message.profile_img)">
+            <img  class="user_img" v-bind:src="getImgUrl(message.profile_img)" @error="getDefault">
         </div>
         <a  variant="primary" :aria-controls="'menu_'+message.id"
       :aria-expanded="[showCollapse ? 'true' : 'false']"
-            v-touch:longtap="Toggle" v-click-outside="CloseonClick" v-bind:class="[[message.you ? 'you':'other'], [showCollapse ? 'collapsed' : null]]" class="message_wrapper">
+            v-touch:longtap="Toggle" v-click-outside="CloseonClick" v-bind:class="[who, [showCollapse ? 'collapsed' : null]]" class="message_wrapper">
             <b style="color: #000">{{message.nickname}}:</b>
             <div class="msg" v-bind:class="'msg_'+message.id" >
                 <div v-if="!message.deleted">
@@ -147,8 +147,9 @@
                 }
 
             },
-            getDefault(){
-                return defaultURL+'api/get/icons8-person-90.jpg'
+            getDefault(event){
+                event.target.src = defaultURL+'api/get/icons8-person-90.jpg'
+
             },
             WhoamI(msg_who){
                 if (msg_who){
@@ -206,12 +207,13 @@ img.user_img{
 }
 .menu{
     grid-area: collapse;
-}.upper_message_wrapper.you{
-    grid-template-columns:auto auto 1fr;
+}
+.upper_message_wrapper.you{
+    grid-template-columns:auto minmax(25vw, auto) 1fr;
     grid-template-areas: 'userimg you .';
 }
 .upper_message_wrapper.other{
-    grid-template-columns: 1fr auto auto;
+    grid-template-columns: 1fr minmax(25vw, auto) auto;
     grid-template-areas: '. other userimg';
 }
 .message_wrapper.you{

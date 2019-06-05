@@ -2,16 +2,24 @@
     <Loader v-if="Dates.length === 0"></Loader>
     <div v-else class="message_holder_wrapper" ref="wrapper" id="messages_display_wrapper">
         <Modal_message_update ref="ModalMessageUpdate"></Modal_message_update>
-        <div class="message_holder">
+        <div class="message_holder container-fluid">
+            <div  v-bind:class="'row day_wrapper day_'+date.date" v-bind:key="index" v-for="(date, index) in Dates">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="horizontal_date" v-bind:id="'hr_day_'+date.date">{{date.date}}</div>
+                    </div>
+                    <div class="row wrapper_you inner_wrapper" >
+                        <div class="container-fluid">
+                            <Chat_message @OpenMessageChangeModal="OpenMessageModal" v-bind:who="Who(UserData.username, message.username)"
+                                          v-bind:message="message"
+                                          v-bind:key="message.id"
+                                          v-for="message in date.messages">
+                             </Chat_message>
+                        </div>
 
-            <div  v-bind:class="'day_wrapper day_'+date.date" v-bind:key="index" v-for="(date, index) in Dates">
-                <div class= "horizontal_date" v-bind:id="'hr_day_'+date.date">{{date.date}}</div>
-            <div class="wrapper_you inner_wrapper" >
-                <Chat_message @OpenMessageChangeModal="OpenMessageModal" v-bind:who="'you'" v-bind:message="message" v-bind:key="message.id" v-for="message in date.messages"></Chat_message>
-            </div>
-            <div class="wrapper_other inner_wrapper"  >
-                 <Chat_message v-bind:key="message.id" v-bind:who="'other'" v-bind:message="message" v-for="message in date.messages"></Chat_message>
-            </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -39,11 +47,22 @@
             Dates(){
                 return this.$store.getters.Messages
 
-            }
+            },
+            UserData:function () {
+               return this.$store.getters.UserData;
+           }
         },created(){
             this.fetch()
 
         },methods:{
+            Who(CurrentUserName, MessageUserName){
+                if(CurrentUserName === MessageUserName){
+                    return 'you'
+                }else
+                {
+                    return 'other'
+                }
+            },
             OpenMessageModal(msg){
           this.$refs.ModalMessageUpdate.open(msg)
         },
@@ -77,19 +96,14 @@
     width: 100%;
 }
 .day_wrapper{
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows:auto auto;
-    grid-template-areas: "date date"
-            "wrapper_you wrapper_other";
+    /*width: 100%;*/
+    /*display: grid;*/
+    /*grid-template-columns: 1fr 1fr;*/
+    /*grid-template-rows:auto auto;*/
+    /*grid-template-areas: "date date"*/
+            /*"wrapper_you wrapper_other";*/
 }
-.wrapper_you{
-    grid-area:wrapper_you
-}
-.wrapper_other{
-    grid-area: wrapper_other;
-}
+
 .upper_message_wrapper{
      margin-top: 20px;
     padding-bottom: 10px;
@@ -123,14 +137,6 @@ img.user_img{
 .collapse{
     grid-area: collapse;
 }
-.upper_message_wrapper.you{
-    grid-template-columns:auto auto 1fr;
-    grid-template-areas: 'userimg you .';
-}
-.upper_message_wrapper.other{
-    grid-template-columns: 1fr auto auto;
-    grid-template-areas: '. other userimg';
-}
 .message_wrapper.you{
     background-color: white;
     color: black;
@@ -161,10 +167,11 @@ img.user_img{
      border-radius: 10px;
     padding: 10px;
     height: auto;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
     grid-template-columns:minmax(25vw,auto);
     grid-template-areas: 'name'
-                        'msg';
+                        'msg'
+                        'collapse';
 
 }
 .message_wrapper b{
@@ -204,13 +211,13 @@ img.user_img{
 .horizontal_date{
   overflow: hidden;
   text-align: center;
-    grid-area: date;
+    width: 100%;
 }
 
 .horizontal_date:before,
 .horizontal_date:after {
   background-color: #000;
-  content: "";
+  content: " ";
   display: inline-block;
   height: 1px;
   position: relative;

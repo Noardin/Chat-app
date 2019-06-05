@@ -311,6 +311,7 @@ export const store = new Vuex.Store({
         newMessages(state,payload){
             var messages = payload.messages;
             state.Messages =[];
+            console.log(messages);
              messages.forEach(function (date) {
                 state.Messages.push(date)
              });
