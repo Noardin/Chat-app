@@ -4,13 +4,15 @@
 
         <b-navbar-toggle target="nav_collapse" />
 
-        <b-collapse is-nav id="nav_collapse">
+        <b-collapse is-nav id="nav_collapse" class="justify-content-between">
           <b-navbar-nav>
 
             <b-nav-item ><router-link to="/">Home</router-link></b-nav-item>
               <b-nav-item ><router-link to="/settings/update">Settings <font-awesome-icon icon="cog"/></router-link></b-nav-item>
-               <b-nav-item @click="Logout"><router-link to="/">logout <font-awesome-icon icon="sign-out-alt"/></router-link></b-nav-item>
           </b-navbar-nav>
+            <b-navbar-nav>
+                <b-nav-item  class="" @click="Logout"><router-link to="/">logout <font-awesome-icon icon="sign-out-alt"/></router-link></b-nav-item>
+            </b-navbar-nav>
         </b-collapse>
       </b-navbar>
     </div>

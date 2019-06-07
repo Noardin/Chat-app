@@ -1,5 +1,5 @@
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid" id="settings_wrapper">
         <alerts></alerts>
         <router-view v-bind:UserData="UserData"></router-view>
 
@@ -22,5 +22,7 @@
 </script>
 
 <style scoped>
-
+    #settings_wrapper{
+        background-color: black;
+    }
 </style>

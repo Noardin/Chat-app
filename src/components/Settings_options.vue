@@ -1,15 +1,12 @@
 <template>
-    <div class="col-md-3" id="change_settings_col">
-            <div class="margin-top row justify-content-center">
+    <div class="col" id="change_settings_col">
+        <div class="row justify-content-start">
                 <button type="button" @click="Send_request" id="change_password">Zmenit heslo</button>
-            </div>
-            <div class="margin-top row align-items-center justify-content-center">
                  <input id="profile_img_input" class="image_input" type="file">
                 <button type="button" id="profile_input_overwrite" @click="PopModal">Zmenit obrazek</button>
-
-            </div>
-
         </div>
+
+    </div>
 </template>
 
 <script>
@@ -34,7 +31,7 @@
     border-radius: .25em;
     padding: .05rem;
     font-size: 1.25rem;
-    font-family: 'Concert One', cursive;
+    font-family:'Arial';
     width: 100%;
     text-align: center;
     outline: none;
@@ -64,10 +61,11 @@
     top: 0;
 }
 button {
+
     display: inline-block;
     border: none;
-    padding: 1rem 2rem;
     margin: 0;
+    margin-right: .5rem;
     text-decoration: none;
     background: #0069ed;
     color: #ffffff;
@@ -80,7 +78,7 @@ button {
     -webkit-appearance: none;
     -moz-appearance: none;
     border-radius: 5px;
-    height: 3.5rem;
+    height: 3rem;
 
 }
 .margin-top{
@@ -105,7 +103,7 @@ button:active {
 }
 #profile_input_overwrite {
 border-radius: 5px;
-    height: 3.5rem;
+    height: 3rem;
 
 }
 </style>

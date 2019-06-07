@@ -10,8 +10,18 @@
                 <div class="col setting_header">Nastavení</div>
             </div>
             <div class="row" >
-                <Settings_options ></Settings_options>
-                <Settings_data_show v-bind:UserData="UserData"></Settings_data_show>
+                <div class="col">
+
+                    <div class="row">
+                        <Settings_data_show v-bind:UserData="UserData"></Settings_data_show>
+
+                    </div>
+                    <div class="row">
+                        <Settings_options ></Settings_options>
+                    </div>
+
+                </div>
+
 
             </div>
 
@@ -69,11 +79,11 @@
 .setting_header{
     height: 3rem;
     font-size: 2rem;
-    font-family: 'Concert One', cursive;
+    font-family: 'Arial';
     display: flex;
     justify-content: center;
     align-items: center;
-    color: royalblue;
+    color: white;
     border-bottom: #777777 2px solid;
     margin-bottom:5px;
 }

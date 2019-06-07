@@ -1,20 +1,37 @@
 <template>
-    <div class="col-md-9">
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="col">
-                        <div class="row align-items-center justify-content-center"><div class="col-sm-5"><h5>prihlasovaci jmeno:</h5></div><div id="username_label" class="col-sm">{{UserData.username}}</div></div>
-                        <div class="row align-items-center justify-content-center"><div class="col-sm-5"><h5>nickname:</h5></div><div id="nickname_label" class="col-sm change_value" @click="PopModal">{{UserData.nickname}}<i class="fas fa-cog"></i></div></div>
-                        <div class="row align-items-center justify-content-center"><div class="col-sm-5"><h5>e-mail:</h5></div><div id="email_label" class="col-sm">{{UserData.email}}</div></div>
+
+    <div class="col">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="profile_data_row row align-items-center justify-content-center">
+                            <div class="col-sm-5">
+                                <h5>prihlasovaci jmeno:</h5>
+                            </div>
+                            <div id="username_label" class="col-sm">{{UserData.username}}</div>
+                        </div>
+                        <div class="profile_data_row row align-items-center justify-content-center">
+                            <div class="col-sm-5">
+                                <h5>nickname:</h5>
+                            </div>
+                            <div id="nickname_label" class="col-sm change_value" @click="PopModal">{{UserData.nickname}}<i class="fas fa-cog"></i></div>
+                        </div>
+                        <div class="profile_data_row row align-items-center justify-content-center">
+                            <div class="col-sm-5">
+                                <h5>e-mail:</h5>
+                            </div>
+                            <div id="email_label" class="col-sm">{{UserData.email}}</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="row justify-content-center align-items-center">
+                            <img @click="PopModalImage" v-bind:src="path(UserData.profile_img)"
+                                 @error="getDefault" v-bind:alt="alt(UserData.nickname)"
+                                 id="profile_img_prewiev" class="profile_img rounded" >
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="row justify-content-center align-items-center">
-                        <img v-bind:src="path(UserData.profile_img)" @error="getDefault" v-bind:alt="alt(UserData.nickname)" id="profile_img_prewiev" class="profile_img rounded"  >
-                    </div>
-                    </div>
-            </div>
-        </div>
+    </div>
 </template>
 
 <script>
@@ -33,6 +50,9 @@
             }
         },
         methods:{
+            PopModalImage(){
+              this.$parent.$refs.cropModal.$refs.change_profileimage.show()
+          },
             getDefault(event){
                 event.target.src = defaultURL+'api/get/icons8-person-90.jpg'
             },
@@ -81,10 +101,16 @@
 .profile_img{
     background-color: white;
     border: .1rem black solid;
-    width: 8em;
-    height: 8em;
+    height: 8rem;
+    width: auto;
 }
 .change_value{
     cursor: pointer;
+    }
+
+    .profile_data_row{
+        background-color: white;
+        margin-bottom: 1rem;
+        border-radius: .5rem;
     }
 </style>

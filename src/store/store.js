@@ -63,7 +63,8 @@ export const store = new Vuex.Store({
                     },
                     register:{
                         text:{
-                            not:'Jmeno nebo email uz jsou zabrane'
+                            not:'Jmeno nebo email uz jsou zabrane',
+                            registrated:'Uspesne jste se zaregistrovali prosim zkontrolujte svuj email pro dalsi postup'
                         }
                     }
                 }
@@ -198,15 +199,15 @@ export const store = new Vuex.Store({
   },
 
         register (context, userData) {
-               return registerreq(userData)
-      .then(response =>{
-          console.log(response.data.registrated);
-          if(response.data.registrated){
-              router.go('/login');
-          }else{
-              context.commit('HandleAlerts', {state:true, variant:'warning', version:'register', text:'not'})
-          }
-      })
+            return registerreq(userData)
+                .then(response =>{
+                      console.log(response.data.registrated);
+                      if(response.data.registrated){
+                          context.commit('HandleAlerts', {state:true, variant:'success', version:'register', text:'registrated'})
+                      }else{
+                          context.commit('HandleAlerts', {state:true, variant:'warning', version:'register', text:'not'})
+                      }
+                 })
       .catch(error => {
                EventBus.$emit('failedRegistering: ', error)
       })
