@@ -135,14 +135,7 @@ export const store = new Vuex.Store({
         },
 
         uploadMessage(context, message){
-            var you = true;
             message = JSON.parse(message);
-
-            const email = get_email(get_cookie('token'));
-            if (email !== message.email){
-                you = false
-            }
-
             const Message = {
                 audio:message.audio,
                 username: message.username,
@@ -150,7 +143,6 @@ export const store = new Vuex.Store({
                 message: message.message,
                 id: message.msg_id,
                 profile_img: message.profile_img,
-                you: you,
                 date: message.date,
                 reakce:message.reakce,
                 deleted:false
