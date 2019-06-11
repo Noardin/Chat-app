@@ -11,7 +11,7 @@
         </div>
 
 
-    <audio :ref="'audio'+AudioMessage.id" @timeupdate="initProgressBar">
+    <audio v-if="loaded" :ref="'audio'+AudioMessage.id" @timeupdate="initProgressBar">
         <source ref="audio" :src="getURL(AudioMessage.message)" @error="loaded = false" type="audio/wav">
     </audio>
 
