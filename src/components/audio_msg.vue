@@ -27,7 +27,7 @@
         props: ['AudioMessage'],
         data() {
             return {
-                loaded:false,
+                loaded:true,
                 isPlaying: false
             }
         },
