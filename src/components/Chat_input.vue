@@ -1,7 +1,7 @@
 <template>
 
     <form id="chat_input" @submit="submitSurvey">
-      <input v-model="message" type="text" class="message" name="message"  placeholder="Napiste neco"/>
+      <input v-model="message" type="text" autocomplete="off" class="message" name="message"  placeholder="Napiste neco"/>
         <AudioButton></AudioButton>
       <input id="odeslat" type="submit" value="odeslat"/>
     </form>
