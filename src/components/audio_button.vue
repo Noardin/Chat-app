@@ -1,5 +1,5 @@
 <template>
-    <div id="audio_button" ref="audio_button" class="audiobuttn" v-on:mousedown.stop.prevent="ToggleRecording" v-on:mouseup.stop.prevent="ToggleRecording">
+    <div id="audio_button" ref="audio_button" class="audiobuttn" v-touch:start.stop.prevent="ToggleRecording" v-touch:end.stop.prevent="ToggleRecording">
         <i class="fas fa-microphone" ></i>
     </div>
 </template>
