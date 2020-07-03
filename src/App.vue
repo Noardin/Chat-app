@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-      <Header v-if="$route.name !== 'login' || 'register'"></Header>
+      <Header v-if="currentRouteName !== 'login' || 'register'"></Header>
     <router-view/>
   </div>
 </template>
@@ -17,7 +17,12 @@
       name:'App',
       components:{
           Header,
-
+      },
+      computed:{
+          currentRouteName(){
+              Console.log("currentroute "+this.$route.name);
+              return this.$route.name
+          }
       }
 
   }
