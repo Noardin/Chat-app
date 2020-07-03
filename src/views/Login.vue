@@ -2,7 +2,7 @@
    <div id="login_wrapper">
        <alerts></alerts>
        <div v-if="isAuthenticated">
-            <router-link to="/" class=".login-link">Chat</router-link>
+            <router-link to="/" class="login-link">Chat</router-link>
        </div>
        <div v-if="!isAuthenticated">
            <router-link to="/register" class=".login-link">register</router-link>

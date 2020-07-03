@@ -1,7 +1,7 @@
 <template>
     <div id="register_wrapper">
         {{this.msg}}
-       <router-link to="/login" class=".login-link">login</router-link>
+       <router-link to="/login" class="login-link">login</router-link>
         <alerts></alerts>
        <Registerform v-on:newRegistration="Register"></Registerform>
 
