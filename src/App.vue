@@ -20,7 +20,7 @@
       },
       computed:{
           currentRouteName(){
-              Console.log("currentroute "+this.$route.name);
+              console.log("currentroute "+this.$route.name);
               return this.$route.name
           }
       }
