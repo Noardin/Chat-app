@@ -50,7 +50,7 @@ padding: 50px;
 }
     .login-link {
   font-size: 12px;
-  color: #444;
+  color: white;
   display: block;
 	margin-top: 12px;
 }
