@@ -5,7 +5,7 @@
             <router-link to="/" class="login-link">Chat</router-link>
        </div>
        <div v-if="!isAuthenticated">
-           <router-link to="/register" class=".login-link">register</router-link>
+           <router-link to="/register" class="login-link">register</router-link>
        </div>
 
        <Loginform ></Loginform>
@@ -49,7 +49,7 @@ padding: 50px;
     width: 100%;
 }
     .login-link {
-  font-size: 12px;
+  font-size: 20px;
   color: white;
   display: block;
 	margin-top: 12px;
