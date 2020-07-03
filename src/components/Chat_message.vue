@@ -5,7 +5,7 @@
         </div>
         <a  variant="primary" :aria-controls="'menu_'+message.id"
       :aria-expanded="[showCollapse ? 'true' : 'false']"
-            v-touch:longtap="Toggle" v-click-outside="CloseonClick" v-bind:class="[who, [showCollapse ? 'collapsed' : null]]" class="message_wrapper">
+            v-touch:tap="Toggle" v-click-outside="CloseonClick" v-bind:class="[who, [showCollapse ? 'collapsed' : null]]" class="message_wrapper">
             <b style="color: #000">{{message.nickname}}:</b>
             <div class="msg" v-bind:class="'msg_'+message.id" >
                 <div v-if="!message.deleted">
@@ -237,6 +237,7 @@ img.user_img{
 }
 .message_wrapper{
     font-size: larger;
+    cursor: pointer;
 }
 .message_wrapper.other{
     background-color: royalblue;
