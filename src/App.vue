@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-      <Header v-if="currentRoute !== 'login' || 'register'"></Header>
+      <Header v-if="$route.name !== 'login' || 'register'"></Header>
     <router-view/>
   </div>
 </template>
@@ -18,11 +18,6 @@
       components:{
           Header,
 
-      },
-      computed:{
-          currentRoute:function () {
-              return this.$route.name
-          }
       }
 
   }
