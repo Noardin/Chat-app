@@ -133,7 +133,7 @@
             },
             Toggle(){
                 console.log('toggle');
-                this.showCollapse = !this.showCollapse
+                this.showCollapse = true
             },
             CloseonClick() {
                 this.showCollapse = false
